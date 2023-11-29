@@ -5,10 +5,10 @@ import java.util.List;
 
 public class TestMarksheet {
 	public static void main(String[] args) throws Exception {
-		testAdd();
+		//testAdd();
 		//testDelete();
 		//testUpdate();
-		//testSearch();
+		testSearch();
 		//testFindByPk();
 		
 	}
@@ -37,16 +37,21 @@ public class TestMarksheet {
 
 
 	private static void testSearch() throws Exception {
+		MarksheetBean bean = new MarksheetBean();
+		//bean.setName("ram");
+		bean.setRoll_no(1000);
 		
 		MarksheetModal modal = new MarksheetModal();
+		List list = modal.search(bean,1,5);
+		//List list = modal.search(null);
 		
-		List list = modal.search();
+		//List list = modal.search(bean,1,5);
 		
 		Iterator it = list.iterator();
 		
 		while(it.hasNext()) {
 			
-			MarksheetBean bean = (MarksheetBean) it.next();
+			 bean = (MarksheetBean) it.next();
 			
 			System.out.print( bean.getId());
 			System.out.print("\t" +bean.getName());
@@ -70,10 +75,8 @@ public class TestMarksheet {
 	private static void testAdd() throws Exception {
 		MarksheetBean bean = new MarksheetBean();
 		
-		
-		
-		
-		bean.setName("ramuuuuuu");
+		//bean.setId(12);
+		bean.setName("sonaliiiiii");
 		bean.setRoll_no(55);
 		bean.setPhy(99);
 		bean.setChe(66);
@@ -82,7 +85,7 @@ public class TestMarksheet {
 		
 		MarksheetModal modal = new MarksheetModal();
 		
-		modal.add(bean);
+		//modal.add(bean);
 		
 	}
 			
