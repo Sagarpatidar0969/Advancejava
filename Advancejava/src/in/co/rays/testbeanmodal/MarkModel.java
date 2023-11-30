@@ -42,11 +42,11 @@ public class MarkModel {
 	public void update(MarkBean bean) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance04", "root", "root");
-		PreparedStatement ps = conn.prepareStatement("update marksheet set id = ? where name = ?)");
-		ps.setString(2,bean.getName());
-		ps.setInt(1,bean.getId());
+		PreparedStatement ps = conn.prepareStatement("update marksheet set name = ? where id = ?");
+		ps.setString(1,bean.getName());
+		ps.setInt(2,bean.getId());
 		int i = ps.executeUpdate();
-		System.out.println("Data inserted =" + i);
+		System.out.println("Data updated =" + i);
 		
 	}
 	public void delete(int id) throws Exception {
@@ -94,8 +94,55 @@ public class MarkModel {
 			list.add(bean);
 			
 		}return list;
-	
 
 	}
+	public MarkBean findByPk(int id) throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance04", "root", "root");
+		PreparedStatement ps = conn.prepareStatement("select * from marksheet where id = ?");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		MarkBean bean = null;
+		
+		while(rs.next()) {
+			bean = new MarkBean();
+			bean.setId(rs.getInt(1));
+			bean.setName(rs.getString(2));
+			bean.setRoll_no(rs.getInt(3));
+			bean.setChe(rs.getInt(4));
+			bean.setPhy(rs.getInt(5));
+			bean.setMaths(rs.getInt(6));
+			
+		}return bean;
+	}
+	
+	public List search1(MarkBean bean)throws Exception{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance04", "root", "root");
+		StringBuffer sql =new StringBuffer("select * from marksheet where 1=1");
+		if(bean != null) {
+			if(bean.getName() != null && bean.getName().length()>0) {
+				sql.append(" and name like '" +bean.getName()+"%' ");
+				
+			}
+		}
+		System.out.println(sql);
+		PreparedStatement ps = conn.prepareStatement(sql.toString());
+		ResultSet rs = ps.executeQuery();
+		List list = new ArrayList();
+		while(rs.next()) {
+			 bean = new MarkBean();
+			 bean.setId(rs.getInt(1));
+			 bean.setName(rs.getString(2));
+			 bean.setRoll_no(rs.getInt(3));
+			 bean.setChe(rs.getInt(4));
+			 bean.setMaths(rs.getInt(5));
+			 bean.setPhy(rs.getInt(6));
+			 list.add(bean);
+		}return list;
+	}
+	
+		
+	}
 
-}
+

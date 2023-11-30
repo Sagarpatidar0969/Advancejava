@@ -8,10 +8,12 @@ public class TestMark {
 		//testAdd();
 		//testUpdate();
 		//testDelete();
-		testSearch();
+		//testSearch();
+		//testFindByPk();
+		testSearch1();
+		
 	}
 
-	
 
 	private static void testAdd() throws Exception {
 		MarkBean bean = new MarkBean();
@@ -64,4 +66,43 @@ public class TestMark {
 		}
    		
 	}
+	private static void testFindByPk() throws Exception {
+	
+		MarkModel model = new MarkModel();
+	    MarkBean bean =   model.findByPk(2);
+	    
+	    if(bean != null) {
+	    	System.out.println(bean.getId());
+	    	System.out.println(bean.getName());
+	    	System.out.println(bean.getRoll_no());
+	    	System.out.println(bean.getChe());
+	    	System.out.println(bean.getPhy());
+	    	System.out.println(bean.getMaths());
+	    }
+	    else{
+	    	System.out.println("id does not found");
+	    }
+	}
+	private static void testSearch1() throws Exception {
+		MarkBean bean = new MarkBean();
+		bean.setName("r");
+		
+		MarkModel model = new MarkModel();
+		List list = model.search1(bean);
+		
+		Iterator it = list.iterator();
+		
+		while(it.hasNext()) {
+			bean = (MarkBean) it.next();
+			System.out.print(bean.getId());
+			System.out.print("\t" + bean.getName());
+			System.out.print("\t" + bean.getRoll_no());
+			System.out.print("\t" + bean.getChe());
+			System.out.print("\t" + bean.getPhy());
+			System.out.println("\t" + bean.getMaths());
+			
+		}
+		
+	}
+
 }

@@ -62,12 +62,6 @@ public class TestMarksheet {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
 	}
 
 
@@ -85,7 +79,7 @@ public class TestMarksheet {
 		
 		MarksheetModal modal = new MarksheetModal();
 		
-		//modal.add(bean);
+		modal.add(bean);
 		
 	}
 			
