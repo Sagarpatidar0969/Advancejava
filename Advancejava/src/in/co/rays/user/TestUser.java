@@ -12,10 +12,28 @@ import in.co.rays.marksheet.MarksheetModal;
 
 public class TestUser {
 	public static void main(String[] args) throws Exception {
-		testadd();
+		//testadd();
 		//testUpdate();
-		//testSearch();
+		testSearch();
 		//testAuthenticate();
+		//testFindById();
+	}
+
+	private static void testFindById() throws Exception {
+		UserModel model = new UserModel();
+		UserBean bean = model.findByid(4);
+		
+		if(bean != null) {
+			System.out.println(bean.getId());
+			System.out.println(bean.getFirst_name());
+			System.out.println(bean.getLast_name());
+			System.out.println(bean.getLogin_id());
+			System.out.println(bean.getPassword());
+			System.out.println(bean.getDob());
+			System.out.println(bean.getAddress());
+
+			
+		}
 		
 	}
 
@@ -62,9 +80,11 @@ public class TestUser {
 
 	private static void testUpdate() throws Exception {
 		UserBean bean = new UserBean();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		bean.setId(2);
 		bean.setFirst_name("dilip");
 		bean.setLogin_id("dilip@gmail.com");
+		bean.setDob(sdf.parse("1998-10-23"));
 		
 		UserModel model = new UserModel();
 		model.update(bean);
@@ -75,11 +95,11 @@ public class TestUser {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		        //bean.setId(3);
-				bean.setFirst_name("rahul");
+				bean.setFirst_name("amit");
 				bean.setLast_name("kirar");
 				bean.setLogin_id("rahul@gmail.com");
 				bean.setPassword("1234");
-				bean.setDob((sdf.parse("2000-22-12")));
+				bean.setDob((sdf.parse("2002-22-12")));
 				bean.setAddress("indore");
 				
 				

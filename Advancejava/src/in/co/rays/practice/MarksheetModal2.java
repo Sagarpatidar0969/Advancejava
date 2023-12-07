@@ -8,19 +8,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.co.rays.util.JDBCDataSource;
+
 public class MarksheetModal2 {
 	
 	public void add( MarksheetBean2 bean) throws Exception {
 		
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice", "root", "root");
+		
+	Connection conn =	 JDBCDataSource.getConnection();
 		PreparedStatement ps = conn.prepareStatement("insert into marksheet values(?,?,?,?,?,?)");
 		
 		int pk = nextPk();
 		ps.setInt(1, pk);
 		//ps.setInt(1, bean.getId());
-		ps.setInt(2, bean.getRoll_no());
-		ps.setString(3, bean.getName());
+		ps.setInt(3, bean.getRoll_no());
+		ps.setString(2, bean.getName());
 		ps.setInt(4, bean.getPhy());
 		ps.setInt(5, bean.getChe());
 		ps.setInt(6, bean.getMaths());

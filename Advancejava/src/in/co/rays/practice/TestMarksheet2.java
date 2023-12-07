@@ -21,8 +21,9 @@ public class TestMarksheet2 {
 		private static void testAdd() throws Exception {
 			MarksheetBean2 bean = new MarksheetBean2();
 			//bean.setId(8);
-			bean.setRoll_no(109);
+			
 			bean.setName("chetan");
+			bean.setRoll_no(109);
 			bean.setPhy(88);
 			bean.setChe(99);
 			bean.setMaths(55);
