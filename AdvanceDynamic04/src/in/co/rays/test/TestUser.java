@@ -10,13 +10,45 @@ import in.co.rays.model.UserModel;
 public class TestUser  {
 	public static void main(String[] args) throws Exception {
 		//testAdd();
-		//testUpdate();
+		testUpdate();
 		//testDelete();
 		//testFindById();
 		//testSearch();
 		//testAuthenticate();
-		testDynamicSearch();
+		//testDynamicSearch();
+		//testForgetPassword();
 	}
+	private static void testSearch() throws Exception {
+
+		UserBean bean = new UserBean();
+		bean.setFirst_name("s");
+	
+		
+		UserModel model = new UserModel();
+		List list = model.search(bean, 1, 5);
+		Iterator it = list.iterator();
+		while(it.hasNext()) {
+			bean = (UserBean) it.next();
+			System.out.println(bean.getId());
+			System.out.print(" \t " +bean.getFirst_name());
+			System.out.print(" \t " +bean.getLast_name());
+			System.out.print(" \t " +bean.getLogin_id());
+		    System.out.print(" \t " +bean.getPassword());
+			System.out.print(" \t " +bean.getDob());
+			System.out.println(" \t " +bean.getAddress());
+			
+		}
+	}
+	private static void testForgetPassword() throws Exception {
+		
+		UserBean bean = new UserBean();
+		
+		UserModel model = new UserModel();
+	     bean  =   model.forgetPassword("xcvbn","himanshu@gmail.com");
+		 
+		System.out.println("data updated");
+			
+		}
 	
 	
 private static void testDynamicSearch() throws Exception {
@@ -66,25 +98,25 @@ private static void testAuthenticate() throws Exception {
 
 
 
-private static void testSearch() throws Exception {
-
-		UserModel model = new UserModel();
-	    List list =	model.search();
-	    Iterator it = list.iterator();
-	    
-	    while(it.hasNext()) {
-	    	UserBean bean = (UserBean) it.next();
-	    	System.out.print(bean.getId());
-	    	System.out.print(" \t " +bean.getFirst_name());
-			System.out.print(" \t " +bean.getLast_name());
-			System.out.print(" \t " +bean.getLogin_id());
-		    System.out.print(" \t " +bean.getPassword());
-			System.out.print(" \t " +bean.getDob());
-			System.out.println(" \t " +bean.getAddress());
-			
-	    }
-	
-	}
+//private static void testSearch() throws Exception {
+//
+//		UserModel model = new UserModel();
+//	    List list =	model.search();
+//	    Iterator it = list.iterator();
+//	    
+//	    while(it.hasNext()) {
+//	    	UserBean bean = (UserBean) it.next();
+//	    	System.out.print(bean.getId());
+//	    	System.out.print(" \t " +bean.getFirst_name());
+//			System.out.print(" \t " +bean.getLast_name());
+//			System.out.print(" \t " +bean.getLogin_id());
+//		    System.out.print(" \t " +bean.getPassword());
+//			System.out.print(" \t " +bean.getDob());
+//			System.out.println(" \t " +bean.getAddress());
+//			
+//	    }
+//	
+//	}
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
@@ -123,8 +155,13 @@ private static void testSearch() throws Exception {
 		UserBean bean = new UserBean();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		bean.setId(15);
-		bean.setFirst_name("shivani");
-		bean.setDob(sdf.parse("2002-10-12"));
+		bean.setFirst_name("sumit");
+		bean.setLast_name("patidar");
+		bean.setLogin_id("sumit@gmail.com");
+		bean.setDob(sdf.parse("2023-10-12"));
+		bean.setPassword("1234");
+		bean.setAddress("jhalawar");
+		
 		
 		UserModel model = new UserModel();
 		model.update(bean);
@@ -137,9 +174,9 @@ private static void testSearch() throws Exception {
 		UserBean bean = new UserBean();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //		bean.setId(15);
-		bean.setFirst_name("sumit");
+		bean.setFirst_name("nitin");
 		bean.setLast_name("patidar");
-		bean.setLogin_id("sumit@gmail.com");
+		bean.setLogin_id("nitin@gmail.com");
 		bean.setDob(sdf.parse("2023-10-12"));
 		bean.setPassword("1234");
 		bean.setAddress("jhalawar");

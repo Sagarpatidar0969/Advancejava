@@ -16,8 +16,9 @@ public class UserModel {
 	
 	public void add(UserBean bean)throws Exception {
 		Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement ps = conn.prepareStatement("insert into user values(?,?,?,?,?,?,?)");
-		ps.setInt(1,nextPk(0));
+	    PreparedStatement ps = conn.prepareStatement("insert into user values(?,?,?,?,?,?,?)");
+		int pk = nextPk(0);
+	    ps.setInt(1,pk);
 		ps.setString(2, bean.getFirst_name());
 		ps.setString(3, bean.getLast_name());
 		ps.setString(4, bean.getLogin_id());
@@ -35,10 +36,14 @@ public class UserModel {
 	
 	public void update(UserBean bean)throws Exception {
         Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement ps = conn.prepareStatement("update user set first_name = ? ,dob = ? where id = ?");
-		ps.setInt(3,bean.getId());
+		PreparedStatement ps = conn.prepareStatement("update user set first_name = ? ,dob = ?,last_name = ?,login_id=?,password = ?,address = ? where id = ?");
+		ps.setInt(7,bean.getId());
 		ps.setString(1, bean.getFirst_name());
 		ps.setDate(2, new java.sql.Date(bean.getDob().getTime()));
+		ps.setString(3, bean.getLast_name());
+		ps.setString(4, bean.getLogin_id());
+		ps.setString(5, bean.getPassword());
+		ps.setString(6, bean.getAddress());
 		
 		int i = ps.executeUpdate();
 		System.out.println("data updated =" + i);
@@ -70,6 +75,7 @@ public class UserModel {
 			
 			while(rs.next()) {
 				bean = new UserBean();
+				bean.setId(rs.getInt(1));
 				bean.setFirst_name(rs.getString(2));
 				bean.setLast_name(rs.getString(3));
 				bean.setLogin_id(rs.getString(4));
@@ -82,14 +88,37 @@ public class UserModel {
 	
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
-	public List search()throws Exception {
+	public List search(UserBean bean,int pageNo,int pageSize)throws Exception {
         Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement ps = conn.prepareStatement("select * from user");
+StringBuffer sql = new StringBuffer("select * from user where 1=1");
+		
+		if(bean != null) {
+			if(bean.getFirst_name() != null && bean.getFirst_name().length()>0) {
+				sql.append(" and first_name like '"+bean.getFirst_name()+"%'");
+			}
+			
+			if(bean.getAddress() != null && bean.getAddress().length()>0) {
+				sql.append(" and address like '"+ bean.getAddress()+"%'");
+			}
+			
+			if(bean.getId() != 0) {
+				sql.append(" and id = "+ bean.getId()+" ");
+			}
+		}
+		
+		if(pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + " , " + pageSize );
+			
+		}
+		System.out.println(sql);
+		
+		PreparedStatement ps = conn.prepareStatement(sql.toString());
 		ResultSet rs = ps.executeQuery();
 		ArrayList list = new ArrayList();
 		
 		while(rs.next()) {
-			    UserBean  bean = new UserBean();
+			      bean = new UserBean();
 			    bean.setId(rs.getInt(1));
 			    bean.setFirst_name(rs.getString(2));
 				bean.setLast_name(rs.getString(3));
@@ -191,6 +220,19 @@ public class UserModel {
 				list.add(bean);
 			
 		}return list;
+	}
+	
+	
+public UserBean forgetPassword(String password,String loginId) throws Exception {
+		
+		Connection conn = JDBCDataSource.getConnection();
+		PreparedStatement ps = conn.prepareStatement("update user set password = ? where login_id = ?");
+		UserBean bean = null;
+		ps.setString(1, password);
+		ps.setString(2, loginId);
+		int i = ps.executeUpdate();
+		 
+	return bean;
 	}
 	
 }

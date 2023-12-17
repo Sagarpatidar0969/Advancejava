@@ -19,7 +19,7 @@ public class UserRegistrationCtl extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		resp.sendRedirect("UserRegistrationView.jsp");
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class UserRegistrationCtl extends HttpServlet {
 			e.printStackTrace();
 		}	
 		 
-		 resp.sendRedirect("UserRegistrationView.jsp");
+		 resp.sendRedirect("LoginView.jsp");
 	}
 	
 	
