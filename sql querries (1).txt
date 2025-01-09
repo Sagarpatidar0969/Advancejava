@@ -1,0 +1,949 @@
+mysql> 
+
+mysql> create database advance_java;
+
+mysql> use advance_java;
+
+mysql> show tables;
+
+mysql> create table emp(id int, name varchar(50), salary int);
+
+mysql> select * from emp;
+
+mysql> insert into emp values(1, 'abc', 1000);
+
+mysql> insert into emp(id, name) values(2, 'xyz');
+
+mysql> update emp set salary = 5500 where id = 1;
+
+mysql> delete from emp where id = 2;
+
+mysql> select * from emp where id = 1;
+
+mysql> select id from emp;
+
+mysql> select id, name from emp;
+
+mysql> select name, id from emp;
+
+mysql> drop table emp;
+
+
+delete table data.
+mysql> truncate table emp;
+
+
+mysql> drop database advance_java;
+
+mysql> alter table emp add salary int;
+
+ALTER TABLE table_name CHANGE COLUMN name to name1 varchar(50);
+
+RENAME TABLE employees TO staff;
+
+
+
+=================================================
+
+# Primary Key with table creation:
+
+mysql> create table emp(id int primary key, name varchar(50), salary int);
+
+=================================================
+
+# Primary Key after table creation:
+
+mysql> create table emp(id int, name varchar(50), salary int);
+
+mysql> alter table emp add primary key(id);
+
+
+================================================
+
+# foreign key without on update cascade & on delete cascade
+
+mysql> create table emp(id int primary key, name varchar(50), salary int);
+
+mysql> create table dept(id int primary key, dept_name varchar(50));
+
+mysql> alter table emp add dept_id int;
+
+mysql> alter table emp add foreign key(dept_id) references dept(id);
+
+mysql> drop table emp;
+
+mysql> drop table dept;
+
+=================================================
+
+# foreign key with on update cascade & on delete cascade
+
+mysql> create table emp(id int primary key, name varchar(50), salary int);
+
+mysql> create table dept(id int primary key, dept_name varchar(50));
+
+mysql> alter table emp add dept_id int;
+
+mysql> alter table emp add foreign key(dept_id) references dept(id) on update cascade on delete cascade;
+
+mysql> drop table emp;
+
+mysql> drop table dept;
+
+=================================================
+
+# foreign in single sql querry with on update cascade & on delete cascade
+dr
+mysql> create table dept(id int primary key, dept_name varchar(50));
+
+mysql> create table emp(id int primary key, name varchar(50), salary int, dept_id int, foreign key(dept_id) references dept(id) on update cascade on delete cascade);
+
+
+====================================================
+
+mysql> use advance_java;
+
+mysql> drop table emp;
+
+mysql> dropm table dept;
+
+mysql> create table emp(id int primary key, name varchar(50), salary int);
+
+mysql> select max(salary) from emp;
+
+mysql> select min(salary) from emp;
+
+mysql> select sum(salary) from emp;
+
+mysql> select count(salary) from emp;
+
+mysql> select count(*) from emp;
+
+mysql> select * from emp;
+
+mysql> select * from emp order by salary;
+
+mysql> select * from emp order by salary desc;
+
+mysql> select * from emp order by name;
+
+mysql> select * from emp order by name desc;
+
+mysql> select * from emp where id = 1;
+
+mysql> select * from emp where name = 'abc';
+
+mysql> select * from emp where name = 'a';
+
+mysql> select * from emp where name like 'a';
+
+mysql> select * from emp where name like 'a%';
+
+===========================================
+
+# limit
+
+mysql> select * from emp;
+
+mysql> select * from emp limit 0, 2;
+
+mysql> select * from emp limit limit 2, 2;
+
+=============================================
+
+# second highest with limit and without limit
+
+mysql> select * from emp;(
+
+mysql> select max(salary) from emp;
+
+mysql> select * from emp;
+
+mysql> select * from emp order by salary;
+
+mysql> select * from emp order by salary desc;
+
+mysql> select * from emp order by salary desc limit 0, 1;
+
+mysql> select * from emp order by salary desc limit 1, 1;
+
+mysql> select * from emp order by salary desc limit 0, 2;
+
+mysql> select max(salary) from emp;
+
+mysql> select max(salary) from emp where salary < (select max(salary) from emp);
+
+mysql> select * from emp where salary = (select max(salary) from emp where salary < (select max(salary) from emp));
+
+=======================
+
+# aliases
+
+mysql> select emp.id as emp_id, name, salary from emp;
+
+mysql> select emp.id as emp_id, name as emp_name, salary as emp_salary from emp;
+
+mysql> select e.id as emp_id, name as emp_name, salary as emp_salary from emp as e;
+
+mysql> select e.id  emp_id, name emp_name, salary emp_salary from emp e;
+
+mysql> select e.id as emp_id, name as emp_name, salary as emp_salary, d.id as dept_id, name as dept_namee from emp as e, dept as d;
+
+=============================
+
+# joins
+
+mysql> select * from emp;
++----+-----------+--------+
+| id | name      | salary |
++----+-----------+--------+
+|  1 | abc       |   1000 |
+|  2 | xyz       |    100 |
+|  3 | pqr       |    700 |
+|  4 | vinjan    |   1700 |
+|  5 | suraj     |   1100 |
+|  6 | priya     |   2100 |
+|  7 | madhumita |   1200 |
++----+-----------+--------+
+
+mysql> select * from dep t;
++-----+-----------+
+| id  | dept_name |
++-----+-----------+
+|   1 | sales     |
+|   2 | marketing |
+|   3 | it        |
+| 100 | accounts  |
++-----+-----------+
+
+mysql> select * from emp inner join dept on emp.id = dept.id;
++----+------+--------+----+-----------+
+| id | name | salary | id | dept_name |
++----+------+--------+----+-----------+
+|  1 | abc  |   1000 |  1 | sales     |
+|  2 | xyz  |    100 |  2 | marketing |
+|  3 | pqr  |    700 |  3 | it        |
++----+------+--------+----+-----------+
+
+mysql> select * from emp left join dept on emp.id = dept.id;
++----+-----------+--------+------+-----------+
+| id | name      | salary | id   | dept_name |
++----+-----------+--------+------+-----------+  
+|  1 | abc       |   1000 |    1 | sales     |
+|  2 | xyz       |    100 |    2 | marketing |
+|  3 | pqr       |    700 |    3 | it        |
+|  4 | vinjan    |   1700 | NULL | NULL      |
+|  5 | suraj     |   1100 | NULL | NULL      |
+|  6 | priya     |   2100 | NULL | NULL      |
+|  7 | madhumita |   1200 | NULL | NULL      |
++----+-----------+--------+------+-----------+
+
+mysql> select * from emp right join dept on emp.id = dept.id;
++------+------+--------+-----+-----------+
+| id   | name | salary | id  | dept_name |
++------+------+--------+-----+-----------+
+|    1 | abc  |   1000 |   1 | sales     |
+|    2 | xyz  |    100 |   2 | marketing |
+|    3 | pqr  |    700 |   3 | it        |
+| NULL | NULL |   NULL | 100 | accounts  |
++------+------+--------+-----+-----------+
+r
+mysql> select * from emp left join dept on emp.id = dept.id union select * from emp right join dept on emp.id = dept.id;
++------+-----------+--------+------+-----------+
+| id   | name      | salary | id   | dept_name |
++------+-----------+--------+------+-----------+
+|    1 | abc       |   1000 |    1 | sales     |
+|    2 | xyz       |    100 |    2 | marketing |
+|    3 | pqr       |    700 |    3 | it        |
+|    4 | vinjan    |   1700 | NULL | NULL      |
+|    5 | suraj     |   1100 | NULL | NULL      |
+|    6 | priya     |   2100 | NULL | NULL      |
+|    7 | madhumita |   1200 | NULL | NULL      |
+| NULL | NULL      |   NULL |  100 | accounts  |
++------+-----------+--------+------+-----------+
+
+mysql> select * from emp left join dept on emp.id = dept.id where dept.id is null union select * from emp right join dept on emp.id = dept.id where emp.id is null;
++------+-----------+--------+------+-----------+
+| id   | name      | salary | id   | dept_name |
++------+-----------+--------+------+-----------+
+|    4 | vinjan    |   1700 | NULL | NULL      |
+|    5 | suraj     |   1100 | NULL | NULL      |
+|    6 | priya     |   2100 | NULL | NULL      |
+|    7 | madhumita |   1200 | NULL | NULL      |
+| NULL | NULL      |   NULL |  100 | accounts  |
++------+-----------+--------+------+-----------+
+
+===============================================================================
+
+# testing
+
+mysql> select * from emp left join dept on emp.id = dept.id;
++----+-----------+--------+------+-----------+
+| id | name      | salary | id   | dept_name |
++----+-----------+--------+------+-----------+
+|  1 | abc       |   1000 |    1 | sales     |
+|  2 | xyz       |    100 |    2 | marketing |
+|  3 | pqr       |    700 |    3 | it        |
+|  4 | vinjan    |   1700 | NULL | NULL      |
+|  5 | suraj     |   1100 | NULL | NULL      |
+|  6 | priya     |   2100 | NULL | NULL      |
+|  7 | madhumita |   1200 | NULL | NULL      |
++----+-----------+--------+------+-----------+
+
+mysql> select * from emp left join dept on emp.id = dept.id where dept.id is null;
++----+-----------+--------+------+-----------+
+| id | name      | salary | id   | dept_name |
++----+-----------+--------+------+-----------+
+|  4 | vinjan    |   1700 | NULL | NULL      |
+|  5 | suraj     |   1100 | NULL | NULL      |
+|  6 | priya     |   2100 | NULL | NULL      |
+|  7 | madhumita |   1200 | NULL | NULL      |
++----+-----------+--------+------+-----------+
+
+mysql> select * from emp right join dept on emp.id = dept.id;
++------+------+--------+-----+-----------+
+| id   | name | salary | id  | dept_name |
++------+------+--------+-----+-----------+
+|    1 | abc  |   1000 |   1 | sales     |
+|    2 | xyz  |    100 |   2 | marketing |
+|    3 | pqr  |    700 |   3 | it        |
+| NULL | NULL |   NULL | 100 | accounts  |
++------+------+--------+-----+-----------+
+
+mysql> select * from emp right join dept on emp.id = dept.id where emp.id is null;
++------+------+--------+-----+-----------+
+| id   | name | salary | id  | dept_name |
++------+------+--------+-----+-----------+
+| NULL | NULL |   NULL | 100 | accounts  |
++------+------+--------+-----+-----------+
+
+mysql> select * from emp left join dept on emp.id = dept.id where dept.id is null union select * from emp right join dept on emp.id = dept.id where emp.id is null;
++------+-----------+--------+------+-----------+
+| id   | name      | salary | id   | dept_name |
++------+-----------+--------+------+-----------+
+|    4 | vinjan    |   1700 | NULL | NULL      |
+|    5 | suraj     |   1100 | NULL | NULL      |
+|    6 | priya     |   2100 | NULL | NULL      |
+|    7 | madhumita |   1200 | NULL | NULL      |
+| NULL | NULL      |   NULL |  100 | accounts  |
++------+-----------+--------+------+-----------+
+
+================================================================
+
+mysql> select * from marksheet;
++----+---------+-----------+---------+-----------+-------+
+| id | roll_no | name      | physics | chemistry | maths |
++----+---------+-----------+---------+-----------+-------+
+|  1 |     101 | vinjal    |      76 |        78 |    98 |
+|  2 |     102 | suraj     |      78 |        88 |    99 |
+|  3 |     103 | priya     |      67 |        66 |    89 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |
+|  5 |     105 | abc       |      11 |        22 |    33 |
+|  6 |     106 | xyz       |      23 |        43 |    52 |
++----+---------+-----------+---------+-----------+-------+
+
+mysql> select *, (physics + chemistry + maths) as total from marksheet;
++----+---------+-----------+---------+-----------+-------+-------+
+| id | roll_no | name      | physics | chemistry | maths | total |
++----+---------+-----------+---------+-----------+-------+-------+
+|  1 |     101 | vinjal    |      76 |        78 |    98 |   252 |
+|  2 |     102 | suraj     |      78 |        88 |    99 |   265 |
+|  3 |     103 | priya     |      67 |        66 |    89 |   222 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |   234 |
+|  5 |     105 | abc       |      11 |        22 |    33 |    66 |
+|  6 |     106 | xyz       |      23 |        43 |    52 |   118 |
++----+---------+-----------+---------+-----------+-------+-------+
+
+mysql> select *, (physics + chemistry + maths) as total from marksheet order by total;
++----+---------+-----------+---------+-----------+-------+-------+
+| id | roll_no | name      | physics | chemistry | maths | total |
++----+---------+-----------+---------+-----------+-------+-------+
+|  5 |     105 | abc       |      11 |        22 |    33 |    66 |
+|  6 |     106 | xyz       |      23 |        43 |    52 |   118 |
+|  3 |     103 | priya     |      67 |        66 |    89 |   222 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |   234 |
+|  1 |     101 | vinjal    |      76 |        78 |    98 |   252 |
+|  2 |     102 | suraj     |      78 |        88 |    99 |   265 |
++----+---------+-----------+---------+-----------+-------+-------+
+
+mysql> select *, (physics + chemistry + maths) as total from marksheet order by total desc;
++----+---------+-----------+---------+-----------+-------+-------+
+| id | roll_no | name      | physics | chemistry | maths | total |
++----+---------+-----------+---------+-----------+-------+-------+
+|  2 |     102 | suraj     |      78 |        88 |    99 |   265 |
+|  1 |     101 | vinjal    |      76 |        78 |    98 |   252 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |   234 |
+|  3 |     103 | priya     |      67 |        66 |    89 |   222 |
+|  6 |     106 | xyz       |      23 |        43 |    52 |   118 |
+|  5 |     105 | abc       |      11 |        22 |    33 |    66 |
++----+---------+-----------+---------+-----------+-------+-------+
+
+mysql> select *, (physics + chemistry + maths) as total from marksheet order by total desc limit 0, 3;
++----+---------+-----------+---------+-----------+-------+-------+
+| id | roll_no | name      | physics | chemistry | maths | total |
++----+---------+-----------+---------+-----------+-------+-------+
+|  2 |     102 | suraj     |      78 |        88 |    99 |   265 |
+|  1 |     101 | vinjal    |      76 |        78 |    98 |   252 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |   234 |
++----+---------+-----------+---------+-----------+-------+-------+
+
+mysql> select *, (physics + chemistry + maths) as total from marksheet where physics >= 33 and chemistry >= 33 and maths >=33 order by total desc limit 0, 3;
++----+---------+-----------+---------+-----------+-------+-------+
+| id | roll_no | name      | physics | chemistry | maths | total |
++----+---------+-----------+---------+-----------+-------+-------+
+|  2 |     102 | suraj     |      78 |        88 |    99 |   265 |
+|  1 |     101 | vinjal    |      76 |        78 |    98 |   252 |
+|  4 |     104 | madhumita |      78 |        67 |    89 |   234 |
++----+---------+-----------+---------+-----------+-------+-------+
+
+========================================================
+
+
+TRIGERSSSSSSSS
+
+After update
+
+
+     create trigger after_update
+     after update on dept
+     for each row
+    update emp set salary = salary+1000 where id =3;
+
+before_update
+
+ create trigger before_update
+     before delete on emp
+     for each row
+     update dept set name = "English" where id = 1 ;
+
+after delete
+
+ create trigger after_delete
+    after delete on emp
+    for each row
+    update dept set salary = 6577 where id = 3;
+
+ #before delete**********
+create trigger after_update 
+after update on emp 
+for each row 
+delete from dept where dept_id=2; 
+
+
+#before update******
+create trigger before_update
+ before update on emp
+ for each row 
+insert into dept(dept_id,dept_name) values(old.id,old.name);
+
+-- Set custom delimiter
+DELIMITER $$
+
+-- Create the trigger
+CREATE TRIGGER after_delete
+AFTER DELETE ON emp
+FOR EACH ROW
+BEGIN
+    DELETE FROM dept WHERE dept_id = 1;
+END$$
+
+-- Revert to default delimiter
+DELIMITER ;
+
+-- Verify the initial state of the tables
+SELECT * FROM emp;
+SELECT * FROM dept;
+
+-- Perform the delete operation
+DELETE FROM emp WHERE id = 1;
+
+-- Check the state of the tables after deletion
+SELECT * FROM  emp;
+SELECT * FROM dept;
+
+
+
+
+before delete
+
+
+ create trigger before_delete
+    before delete on emp
+     for each row
+    insert into dept values(4,"social");
+
+
+after insert
+
+ create trigger after_insert
+     after insert on emp
+     for each row
+    delete from dept where id = 4;
+
+
+before_insert
+
+ create trigger before_insert
+    before insert on emp
+    for each row
+    insert into dept values (54, "commerce");
+
+*********************************************************************************************************
+
+last_login 
+
+select last_login from ss where loginid like 'sky123@gmail.com';
+select count(last_login) from ss where loginid like "rp123@gmail.com";
+select * from ss where loginid like 'sky123@gmail.com';
+
+*******sahi wa
+ 
+SELECT user_id, MAX(login_time) AS last_login
+FROM user_logins
+GROUP BY user_id;
+
+
+select * from emp order by last_login limit 0,1;
+
+mysql> select * from user_logins;
++------+-----------------+---------------------+
+| id   | email           | login_time          |
++------+-----------------+---------------------+
+|    1 | naman@gmail.com | 2024-06-04 12:03:00 |
+|    2 | yash@gmail.com  | 2024-06-04 12:08:00 |
+|    3 | yash@gmail.com  | 2024-06-04 12:25:00 |
+|    3 | naman@gmail.com | 2024-06-04 12:55:00 |
++------+-----------------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> select salary, count(*) from emp group by salary;
+
+
+
+1---INSERT------Statment.................
+package in.co.rays.stmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class TestInsert {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		Statement stmt = conn.createStatement();
+
+		int i = stmt.executeUpdate("insert into marksheet values(7, 107, 'aryant', 89, 22, 34)");
+
+		System.out.println("data inserted => " + i);
+	}
+}
+
+------------------------------------------------------------------
+
+package in.co.rays.stmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class TestDelete {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		Statement stmt = conn.createStatement();
+
+		int i = stmt.executeUpdate("delete from marksheet where id = 10");
+
+		System.out.println("data deleted => " + i);
+
+	}
+
+}
+-----------------------------------------------------------------
+
+package in.co.rays.stmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class TestRead {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		Statement stmt = conn.createStatement();
+
+		ResultSet rs = stmt.executeQuery("select * from marksheet");
+
+		while (rs.next()) {
+
+			System.out.print(rs.getInt(1));
+			System.out.print("\t" + rs.getInt(2));
+			System.out.print("\t" + rs.getString(3));
+			System.out.print("\t" + rs.getInt(4));
+			System.out.print("\t" + rs.getInt(5));
+			System.out.println("\t" + rs.getInt(6));
+
+		}
+	}
+}
+------------------------------------------------
+
+package in.co.rays.stmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class TestUpdate {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		Statement stmt = conn.createStatement();
+
+		int i = stmt.executeUpdate("update marksheet set name = 'kkk' where id = 10");
+
+		System.out.println("data updated => " + i);
+
+	}
+
+}
+---------------------------------------
+pstmt..--------------------------------------------
+package in.co.rays.pstmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class TestInsert {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		PreparedStatement pstmt = conn.prepareStatement("insert into marksheet values(8, 108, 'samay', 19, 22, 34)");
+
+		int i = pstmt.executeUpdate();
+
+		System.out.println("data inserted => " + i);
+
+	}
+}
+----------------------------------------------------------------
+
+
+
+package in.co.rays.pstmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class TestDelete {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		PreparedStatement pstmt = conn.prepareStatement("delete from marksheet where id = 10");
+
+		int i = pstmt.executeUpdate();
+
+		System.out.println("data deleted => " + i);
+
+	}
+
+}
+
+--------------------------------------------------------------
+
+
+
+
+package in.co.rays.pstmt;use
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class TestRead {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		PreparedStatement pstmt = conn.prepareStatement("select * from marksheet");
+
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+
+			System.out.print(rs.getInt(1));
+			System.out.print("\t" + rs.getInt(2));
+			System.out.print("\t" + rs.getString(3));
+			System.out.print("\t" + rs.getInt(4));
+			System.out.print("\t" + rs.getInt(5));
+			System.out.println("\t" + rs.getInt(6));
+
+		}
+
+	}
+
+}
+---------------------------------------------------------------------
+
+
+
+package in.co.rays.pstmt;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class TestUpdate {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		PreparedStatement pstmt = conn.prepareStatement("update marksheet set name = 'madhu' where id = 4");
+
+		int i = pstmt.executeUpdate();
+
+		System.out.println("data updated => " + i);
+
+	}
+
+}
+---------------------------------------------------\
+callablestmt
+
+package in.co.rays.callable;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+
+public class TestProcedureIn {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		CallableStatement callStmt = conn.prepareCall("{CALL empIn(?)}");
+
+		callStmt.setInt(1, 10);
+
+		callStmt.execute();
+
+		ResultSet rs = callStmt.getResultSet();
+
+		while (rs.next()) {
+
+			System.out.println(rs.getInt(1));
+			System.out.println(rs.getString(2));
+			System.out.println(rs.getInt(3));
+
+		}
+
+	}
+
+}
+----------------------------------------------------------------
+
+package in.co.rays.callable;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;-
+import java.sql.DriverManager;
+import java.sql.Types;
+
+public class TestProcedureInOut {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		CallableStatement callStmt = conn.prepareCall("{CALL empInOut(?)}");
+
+		callStmt.setInt(1, 10);
+
+		callStmt.registerOutParameter(1, Types.INTEGER);
+
+		callStmt.execute();
+
+		System.out.println(callStmt.getInt(1));
+
+	}
+
+}
+--------------------------------------------------------
+
+
+package in.co.rays.callable;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Types;
+
+public class TestProcedureOut {
+
+	public static void main(String[] args) throws Exception {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+			CallableStatement callStmt = conn.prepareCall("{CALL empOut(?)}");
+
+			callStmt.registerOutParameter(1, Types.INTEGER);
+
+			callStmt.execute();
+
+			int resultValue = callStmt.getInt(1);
+
+			System.out.println("Result from empOut stored procedure: " + resultValue);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+	}
+
+}
+----------------------------------------------------
+
+
+
+package in.co.rays.callable;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Types;
+
+public class TestStoreFunction {
+
+	public static void main(String[] args) throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/advance_java", "root", "root");
+
+		CallableStatement callStmt = conn.prepareCall("{? = CALL square(?)}");
+		callStmt.setInt(2, 10);
+		callStmt.registerOutParameter(1, Types.INTEGER);
+		callStmt.execute();
+
+		System.out.println(" Square " + callStmt.getInt(1));
+	}
+
+}
+------------------------------------------------------------
+
+
+
+
+==========================================================
+# Stored Procedure (in)
+==========================================================
+
+mysql> delimiter &&
+mysql> create procedure empIn(in c int)
+     begin
+     select * from emp where id = c;
+     end &&
+    
+mysql> set @input = 11;
+
+mysql> call empIn(@input);
+
+==========================================================
+# Stored Procedure (out)
+==========================================================
+
+mysql> delimiter &&
+mysql> create procedure empOut(out c int)
+    -> begin
+    -> select salary into c from emp where id = 10;
+    -> end &&
+    
+mysql> call empOut(@output);
+
+mysql> select @output;    
+  
+==========================================================  
+# Stored Procedure (inout)
+==========================================================
+
+mysql> delimiter &&
+mysql> create procedure empInOut(inout c int)
+    -> begin
+    -> select salary into c from emp where id = c;
+    -> end &&
+    
+mysql> set @inout = 1;
+
+mysql> call empInOut(@inout);
+
+mysql> select @inout;
+    
+========================================================== 
+# Stored Function
+==========================================================
+
+mysql> delimiter &&
+mysql> create function square(num int)
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare result int;
+    -> set result = num * num;
+    -> return result;
+    -> end &&
+    
+mysql> select square(10);
+
+==========================================================
+DELIMITER $$
+
+CREATE PROCEDURE empOut(OUT c INT)
+BEGIN
+    SELECT salary INTO c FROM emp WHERE id = 4;
+END $$
