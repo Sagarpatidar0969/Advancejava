@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.bean.UserBean;
+import in.co.rays.util.DataUtility;
 import in.co.rays.util.JDBCDataSource;
 
 public class UserModel {
@@ -23,9 +24,9 @@ public class UserModel {
 		ps.setString(3, bean.getLast_name());
 		ps.setString(4, bean.getLogin_id());
 		ps.setString(5, bean.getPassword());
-		ps.setDate(6, new java.sql.Date(bean.getDob().getTime()));
-		ps.setString(7, bean.getAddress());
-		
+		ps.setString(6, bean.getAddress());
+		ps.setDate(7, new java.sql.Date(bean.getDob().getTime()));
+
 		int i = ps.executeUpdate();
 		System.out.println("data inserted =" + i);
 		
@@ -80,8 +81,9 @@ public class UserModel {
 				bean.setLast_name(rs.getString(3));
 				bean.setLogin_id(rs.getString(4));
 				bean.setPassword(rs.getString(5));
-				bean.setDob(rs.getDate(6));
-				bean.setAddress(rs.getString(7));
+				bean.setAddress(rs.getString(6));
+				bean.setDob(rs.getDate(7));
+
 				
 			}return bean;
 	}
@@ -95,6 +97,10 @@ StringBuffer sql = new StringBuffer("select * from user where 1=1");
 		if(bean != null) {
 			if(bean.getFirst_name() != null && bean.getFirst_name().length()>0) {
 				sql.append(" and first_name like '"+bean.getFirst_name()+"%'");
+			}
+			if(bean.getDob() != null && bean.getDob().getTime()>0) {
+				
+				sql.append(" and dob like '"+DataUtility.dateToString(bean.getDob())+"%'");
 			}
 			
 			if(bean.getAddress() != null && bean.getAddress().length()>0) {
@@ -124,8 +130,9 @@ StringBuffer sql = new StringBuffer("select * from user where 1=1");
 				bean.setLast_name(rs.getString(3));
 				bean.setLogin_id(rs.getString(4));
 				bean.setPassword(rs.getString(5));
-				bean.setDob(rs.getDate(6));
-				bean.setAddress(rs.getString(7));
+				bean.setAddress(rs.getString(6));
+				bean.setDob(rs.getDate(7));
+
 				list.add(bean);
 				
 		}return list;
@@ -172,8 +179,9 @@ StringBuffer sql = new StringBuffer("select * from user where 1=1");
 				bean.setLast_name(rs.getString(3));
 				bean.setLogin_id(rs.getString(4));
 				bean.setPassword(rs.getString(5));
-				bean.setDob(rs.getDate(6));
-				bean.setAddress(rs.getString(7));
+				bean.setAddress(rs.getString(6));
+				bean.setDob(rs.getDate(7));
+
 			
 			
 		}return bean;
@@ -215,8 +223,9 @@ StringBuffer sql = new StringBuffer("select * from user where 1=1");
 				bean.setLast_name(rs.getString(3));
 				bean.setLogin_id(rs.getString(4));
 				bean.setPassword(rs.getString(5));
-				bean.setDob(rs.getDate(6));
-				bean.setAddress(rs.getString(7));
+				bean.setAddress(rs.getString(6));
+				bean.setDob(rs.getDate(7));
+
 				list.add(bean);
 			
 		}return list;

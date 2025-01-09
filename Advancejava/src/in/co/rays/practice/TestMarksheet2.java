@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TestMarksheet2 {
 		public static void main(String[] args) throws Exception {
-			testAdd();
+			//testAdd();
 			//testFindByPk();
-			//testSearch();
+			testSearch();
 		}
 
 		

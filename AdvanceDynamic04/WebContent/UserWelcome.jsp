@@ -10,7 +10,13 @@
 <body>
 <%@ include file="Header.jsp"%>
 
+<h3 align = "center">
+<font size = "20px" color = "red">Welcome to ORS</font>
+</h3>
+
+		<a href="SessionTracking.jsp">track</a> |
 
 	
 </body>
+<%@ include file="Footer.jsp"%>
 </html>

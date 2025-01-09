@@ -10,10 +10,10 @@ import in.co.rays.model.UserModel;
 public class TestUser  {
 	public static void main(String[] args) throws Exception {
 		//testAdd();
-		testUpdate();
+		//testUpdate();
 		//testDelete();
 		//testFindById();
-		//testSearch();
+		testSearch();
 		//testAuthenticate();
 		//testDynamicSearch();
 		//testForgetPassword();
@@ -21,7 +21,7 @@ public class TestUser  {
 	private static void testSearch() throws Exception {
 
 		UserBean bean = new UserBean();
-		bean.setFirst_name("s");
+		//bean.setFirst_name("s");
 	
 		
 		UserModel model = new UserModel();
@@ -34,9 +34,9 @@ public class TestUser  {
 			System.out.print(" \t " +bean.getLast_name());
 			System.out.print(" \t " +bean.getLogin_id());
 		    System.out.print(" \t " +bean.getPassword());
-			System.out.print(" \t " +bean.getDob());
 			System.out.println(" \t " +bean.getAddress());
-			
+			System.out.print(" \t " +bean.getDob());
+
 		}
 	}
 	private static void testForgetPassword() throws Exception {
@@ -173,7 +173,7 @@ private static void testAuthenticate() throws Exception {
 	private static void testAdd() throws Exception {
 		UserBean bean = new UserBean();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		bean.setId(15);
+	//	bean.setId(1);
 		bean.setFirst_name("nitin");
 		bean.setLast_name("patidar");
 		bean.setLogin_id("nitin@gmail.com");

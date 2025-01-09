@@ -33,6 +33,7 @@ public class UserLoginCtl extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String login = req.getParameter("loginId");
 		String pass = req.getParameter("password");
+		String uri =	 req.getParameter("uri");
 		
 		
 		UserModel model = new UserModel();
@@ -41,11 +42,20 @@ public class UserLoginCtl extends HttpServlet{
 		try {
 			
 			 UserBean bean = model.authenticate(login, pass);
+			 
+		
 			
 			if(bean != null) {
 				HttpSession session = req.getSession();
+				
 				session.setAttribute("user", bean);
-				resp.sendRedirect("UserWelcomeCtl");
+				
+				if(uri.equalsIgnoreCase("null")) {
+					
+					resp.sendRedirect("UserWelcomeCtl");
+				}else {
+					resp.sendRedirect(uri);
+				}
 				
 				
 //				req.setAttribute("user", bean); it use without session

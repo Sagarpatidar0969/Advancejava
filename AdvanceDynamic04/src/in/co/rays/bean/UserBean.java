@@ -10,7 +10,8 @@ public class UserBean {
   private String password;
   private Date dob;
   private String address;
-public int getId() {
+  
+ public int getId() {
 	return id;
 }
 public void setId(int id) {

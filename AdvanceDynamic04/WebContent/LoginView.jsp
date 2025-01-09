@@ -15,9 +15,11 @@
 	<form action="UserLoginCtl" method="post">
 
 		<%
+		String uri =	(String)request.getAttribute("uri");
 			
 			String msg = (String) request.getAttribute("msg");
 		%>
+		<td><input type = "hidden" name = "uri" value = "<%=uri %>"></td>
 
 		<table>
 			<tr>
@@ -46,4 +48,5 @@
 				</table>
 				</form>
 </body>
+<%@ include file="Footer.jsp"%>
 </html>

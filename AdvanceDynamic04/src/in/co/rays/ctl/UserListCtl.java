@@ -1,6 +1,7 @@
- package in.co.rays.ctl;
+package in.co.rays.ctl;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.bean.UserBean;
 import in.co.rays.model.UserModel;
+import in.co.rays.util.DataUtility;
 
 @WebServlet("/UserListCtl.do")
 public class UserListCtl extends HttpServlet {
@@ -52,16 +54,22 @@ public class UserListCtl extends HttpServlet {
 		int pageSize = 5;
 
 		pageNo = Integer.parseInt(req.getParameter("pageNo"));
+		
+		
 
 		String op = req.getParameter("operation");
 
+		
+
 		if (op.equals("search")) {
-			pageNo =1;
+			pageNo = 1;
 			String fname = req.getParameter("firstName");
+			String dob = req.getParameter("dob");
 
 			bean = new UserBean();
 
 			bean.setFirst_name(fname);
+			bean.setDob(DataUtility.stringToDate(dob));
 
 		}
 

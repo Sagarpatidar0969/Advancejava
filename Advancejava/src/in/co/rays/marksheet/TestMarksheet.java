@@ -8,8 +8,8 @@ public class TestMarksheet {
 		//testAdd();
 		//testDelete();
 		//testUpdate();
-		//testSearch();
-		testFindByPk();
+		testSearch();
+		//testFindByPk();
 		
 	}
 	private static void testFindByPk() throws Exception {

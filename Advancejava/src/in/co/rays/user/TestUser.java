@@ -40,7 +40,7 @@ public class TestUser {
 	private static void testAuthenticate()throws Exception {
 	
 		UserModel model  = new UserModel();
-	    UserBean bean = model.authenticate("lavish@gmail.com","1234");
+	    UserBean bean = model.authenticate("sumit@gmail.com","1234");
 		
 		if(bean != null) {
 			System.out.println(bean.getId());
