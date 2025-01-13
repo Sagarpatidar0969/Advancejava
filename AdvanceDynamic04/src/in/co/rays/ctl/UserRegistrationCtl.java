@@ -48,6 +48,7 @@ public class UserRegistrationCtl extends HttpServlet {
 		
 		
 		UserBean bean = new UserBean();
+		
 		bean.setFirst_name(fname);
 		bean.setLast_name(lname);
 		bean.setLogin_id(login);

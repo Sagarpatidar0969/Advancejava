@@ -43,6 +43,9 @@
 						<th></th>
 						<td><input type="submit" value="submit"></td>
 					</tr>
+					
+					
+					<a href="UserRegistrationCtl"><b>SignUp</b></a>
 
 
 				</table>
